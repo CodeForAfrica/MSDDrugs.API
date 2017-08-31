@@ -16,3 +16,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['middleware' => 'cors'], function(){
+    // Drugs API Routes without Token.
+    Route::get('drugs', 'DrugController@index');
+    Route::get('drugs/{drugs}', 'DrugController@show');
+    
+});
