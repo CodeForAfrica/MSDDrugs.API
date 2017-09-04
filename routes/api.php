@@ -18,6 +18,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::post('drugs', 'DrugController@store');
     Route::put('drugs/{drug}', 'DrugController@update');
     Route::delete('drugs/{drug}', 'DrugController@delete');
+
+    // Users API route.
+    Route::get('users', 'UserController@index');
+    Route::get('users/{user}', 'UserController@show');
+    Route::post('users', 'UserController@store');
+    Route::put('users/{user}', 'UserController@update');
+    Route::delete('users/{user}', 'UserController@delete');
 });
 
 Route::group(['middleware' => 'cors'], function(){
@@ -25,4 +32,7 @@ Route::group(['middleware' => 'cors'], function(){
     Route::get('drugs', 'DrugController@index');
     Route::get('drugs/{drug}', 'DrugController@show');
     
+    // User Login API Routes without Token.
+    Route::get('user/login', 'Auth\APILoginController@index');
+    Route::get('user/auth', 'Auth\APILoginController@getAuthenticatedUser');
 });
