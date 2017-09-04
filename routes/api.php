@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::group(['middleware' => ['auth:api','cors']], function(){
     // Drugs API routes with Token.
     Route::post('drugs', 'DrugController@store');
     Route::put('drugs/{drug}', 'DrugController@update');
