@@ -14,12 +14,15 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    // Drugs API routes with Token.
+    Route::post('drugs', 'DrugController@store');
+    Route::put('drugs/{drug}', 'DrugController@update');
+    Route::delete('drugs/{drug}', 'DrugController@delete');
 });
 
 Route::group(['middleware' => 'cors'], function(){
     // Drugs API Routes without Token.
     Route::get('drugs', 'DrugController@index');
-    Route::get('drugs/{drugs}', 'DrugController@show');
+    Route::get('drugs/{drug}', 'DrugController@show');
     
 });

@@ -8,8 +8,6 @@ class ApiController extends Controller
 {
     public function index()
     {
-        //return view('api.documentation');
-
-        echo 'Documentation here';
+        return view('api.documentation');
     }
 }
