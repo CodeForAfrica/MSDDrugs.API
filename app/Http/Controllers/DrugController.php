@@ -19,7 +19,7 @@ class DrugController extends Controller
         if($request->name && $request->buying_price)
         {
             $drug = json_decode("{}");
-            $price_check = json_decode("{}");
+            $price_check_result = json_decode("{}");
             $status = 0;
 
             if(isset($queryBuilder->build()->get()[0]))
