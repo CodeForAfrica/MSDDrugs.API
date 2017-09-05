@@ -18,11 +18,13 @@ class PriceCheckController extends Controller
         if($request->limit && $request->limit == 1)
         {
             $pricecheck = json_decode("{}");
+            $drug = json_decode("{}");
             $status = 0;
 
             if(isset($queryBuilder->build()->get()[0]))
             {
                 $pricecheck = $queryBuilder->build()->get()[0];
+                $pricecheck->drug = $drug;
                 $status = 200;
             }
             else
@@ -38,9 +40,16 @@ class PriceCheckController extends Controller
         else
         {
             $pricechecks = $queryBuilder->build()->get();
+            $drug = json_decode("{}");
             $status = 0;
             
-            if($pricechecks && count($pricechecks) > 0) $status = 200;
+            if($pricechecks && count($pricechecks) > 0)
+            {
+                $status = 200;
+                for($x=0;$x<count($pricechecks);$x++){
+                    $pricechecks[$x]->drug = Drug::find($pricechecks[$x]->drug_id);
+                }
+            }
             else $status = 404;
 
             return response()->json([
