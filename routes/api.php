@@ -25,6 +25,20 @@ Route::group(['middleware' => ['auth:api','cors']], function(){
     Route::post('users', 'UserController@store');
     Route::put('users/{user}', 'UserController@update');
     Route::delete('users/{user}', 'UserController@delete');
+
+    // PriceChecks API route.
+    Route::get('pricechecks', 'PriceCheckController@index');
+    Route::get('pricechecks/{pricecheck}', 'PriceCheckController@show');
+    Route::post('pricechecks', 'PriceCheckController@store');
+    Route::put('pricechecks/{pricecheck}', 'PriceCheckController@update');
+    Route::delete('pricechecks/{pricecheck}', 'PriceCheckController@delete');
+
+    // WrongChecks API route.
+    Route::get('wrongchecks', 'WrongCheckController@index');
+    Route::get('wrongchecks/{wrongcheck}', 'WrongCheckController@show');
+    Route::post('wrongchecks', 'WrongCheckController@store');
+    Route::put('wrongchecks/{wrongcheck}', 'WrongCheckController@update');
+    Route::delete('wrongchecks/{wrongcheck}', 'WrongCheckController@delete');
 });
 
 Route::group(['middleware' => 'cors'], function(){
