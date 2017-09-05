@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Drug;
+use App\PriceCheck;
+use App\WrongCheck;
 
 use Unlu\Laravel\Api\QueryBuilder;
 
@@ -61,10 +63,24 @@ class DrugController extends Controller
                     'buying_price_status' => $buying_price_status,
                     'extra_amount' => $extra_amount
                 );
+
+                // Saving price check.
+                $price_check = new PriceCheck();
+                $price_check->drug_id = $drug->id;
+                $price_check->buying_price = $buying_price;
+                $price_check->status = $buying_price_status;
+                $price_check->extra_amount = $extra_amount;
+                $price_check->save();
             }
             else
             {
                 $status = 404;
+
+                // Saving wrong check.
+                $wrong_check = new WrongCheck();
+                $wrong_check->drug_name = str_replace("*","",$request->name);
+                $wrong_check->buying_amount = $request->buying_price;
+                $wrong_check->save();
             }
 
             return response()->json([
