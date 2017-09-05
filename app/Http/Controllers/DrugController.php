@@ -65,12 +65,12 @@ class DrugController extends Controller
                 );
 
                 // Saving price check.
-                $price_check = new PriceCheck();
-                $price_check->drug_id = $drug->id;
-                $price_check->buying_price = $buying_price;
-                $price_check->status = $buying_price_status;
-                $price_check->extra_amount = $extra_amount;
-                $price_check->save();
+                $price_check_obj = new PriceCheck();
+                $price_check_obj->drug_id = $drug->id;
+                $price_check_obj->buying_price = $buying_price;
+                $price_check_obj->status = $buying_price_status;
+                $price_check_obj->extra_amount = $extra_amount;
+                $price_check_obj->save();
             }
             else
             {
