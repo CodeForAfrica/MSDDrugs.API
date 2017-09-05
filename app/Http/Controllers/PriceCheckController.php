@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PriceCheck;
+use App\Drug;
 
 use Unlu\Laravel\Api\QueryBuilder;
 
