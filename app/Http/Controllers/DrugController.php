@@ -59,18 +59,18 @@ class DrugController extends Controller
                     $extra_amount = $drug_price - $buying_price;
                 }
 
-                $price_check = array(
+                $price_check_result = array(
                     'buying_price_status' => $buying_price_status,
                     'extra_amount' => $extra_amount
                 );
 
                 // Saving price check.
-                $price_check_obj = new PriceCheck();
-                $price_check_obj->drug_id = $drug->id;
-                $price_check_obj->buying_price = $buying_price;
-                $price_check_obj->status = $buying_price_status;
-                $price_check_obj->extra_amount = $extra_amount;
-                $price_check_obj->save();
+                $price_check = new PriceCheck();
+                $price_check->drug_id = $drug->id;
+                $price_check->buying_price = $buying_price;
+                $price_check->status = $buying_price_status;
+                $price_check->extra_amount = $extra_amount;
+                $price_check->save();
             }
             else
             {
@@ -86,7 +86,7 @@ class DrugController extends Controller
             return response()->json([
                 'status' => $status,
                 'drug' => $drug,
-                'price_check' => $price_check
+                'price_check' => $price_check_result
             ],200);
         }
         
