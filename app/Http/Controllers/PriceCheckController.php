@@ -61,6 +61,9 @@ class PriceCheckController extends Controller
 
     public function show(PriceCheck $pricecheck)
     {
+        // Attaching drug.
+        $pricecheck->drug = Drug::find($pricecheck->drug_id);
+        
         return response()->json([
             'status' => 200,
             'pricecheck' => $pricecheck
