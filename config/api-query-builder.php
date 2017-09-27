@@ -8,5 +8,5 @@ return [
             'direction' => 'desc'
         ]
     ],
-    'excludedParameters' => ['api_token','buying_price'],
+    'excludedParameters' => ['api_token','measure','buying_price'],
 ];

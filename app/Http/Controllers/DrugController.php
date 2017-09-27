@@ -16,7 +16,7 @@ class DrugController extends Controller
         $queryBuilder = new QueryBuilder(new Drug, $request);
 
         // Buying price checking.
-        if($request->name && $request->buying_price)
+        if($request->name && $request->measure && $request->buying_price)
         {
             $drug = json_decode("{}");
             $price_check_result = json_decode("{}");
