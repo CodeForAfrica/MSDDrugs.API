@@ -28,6 +28,12 @@ class DrugController extends Controller
                 $status = 200;
 
                 // Checking
+                $measure = str_ireplace(",","",$request->measure);
+                $measure = str_ireplace("/","",$measure);
+                $measure = str_ireplace("=","",$measure);
+
+                $buying_price = (int)$buying_price;
+
                 $buying_price = str_ireplace(",","",$request->buying_price);
                 $buying_price = str_ireplace("/","",$buying_price);
                 $buying_price = str_ireplace("=","",$buying_price);
@@ -42,26 +48,30 @@ class DrugController extends Controller
 
                 $buying_price_status = "";
                 $extra_amount = 0;
-                $vidonge = "";
+                $vidonge = 0;
 
                 // Substracting vidonge
                 $temp = explode(" ",$drug->uom);
-                $vidonge = $temp[0];
+                $vidonge = (int)$temp0;
 
-                if($buying_price == $drug_price)
+                // Finding price per tablet
+                $price_per_tab = $drug_price / $vidonge;
+                $required_drug_price = $price_per_tab * $measure;
+
+                if($buying_price == $required_drug_price)
                 {
                     $buying_price_status = "equal";
-                    $extra_amount = $buying_price - $drug_price;
+                    $extra_amount = $buying_price - $required_drug_price;
                 }
-                else if($buying_price > $drug_price)
+                else if($buying_price > $required_drug_price)
                 {
                     $buying_price_status = "above";
-                    $extra_amount = $buying_price - $drug_price;
+                    $extra_amount = $buying_price - $required_drug_price;
                 }
-                else if($buying_price < $drug_price)
+                else if($buying_price < $required_drug_price)
                 {
                     $buying_price_status = "below";
-                    $extra_amount = $drug_price - $buying_price;
+                    $extra_amount = $required_drug_price - $buying_price;
                 }
 
                 $price_check_result = array(
