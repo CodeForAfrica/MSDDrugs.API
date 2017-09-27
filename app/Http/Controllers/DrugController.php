@@ -52,7 +52,7 @@ class DrugController extends Controller
 
                 // Substracting vidonge
                 $temp = explode(" ",$drug->uom);
-                $vidonge = (int)$temp0;
+                $vidonge = (int)$temp[0];
 
                 // Finding price per tablet
                 $price_per_tab = $drug_price / $vidonge;
