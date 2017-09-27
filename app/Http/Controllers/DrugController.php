@@ -32,7 +32,7 @@ class DrugController extends Controller
                 $measure = str_ireplace("/","",$measure);
                 $measure = str_ireplace("=","",$measure);
 
-                $buying_price = (int)$buying_price;
+                $measure = (int)$measure;
 
                 $buying_price = str_ireplace(",","",$request->buying_price);
                 $buying_price = str_ireplace("/","",$buying_price);
