@@ -42,6 +42,11 @@ class DrugController extends Controller
 
                 $buying_price_status = "";
                 $extra_amount = 0;
+                $vidonge = "";
+
+                // Substracting vidonge
+                $temp = explode(" ",$drug->uom);
+                $vidonge = $temp[0];
 
                 if($buying_price == $drug_price)
                 {
@@ -61,7 +66,8 @@ class DrugController extends Controller
 
                 $price_check_result = array(
                     'buying_price_status' => $buying_price_status,
-                    'extra_amount' => $extra_amount
+                    'extra_amount' => $extra_amount,
+                    'vidonge' => $vidonge
                 );
 
                 // Saving price check.
