@@ -75,6 +75,7 @@ class StatisticsCheckController extends Controller
                         }
                         else $sum = 0;
 
+                        $status = 200;
                         $message .= ''.$n.'. '.$keyword->name_long.' - TZS '.$sum.'/=\n';
                         $n++;
                     }
