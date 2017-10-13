@@ -49,4 +49,19 @@ Route::group(['middleware' => 'cors'], function(){
     // User Login API Routes without Token.
     Route::get('user/login', 'Auth\APILoginController@index');
     Route::get('user/auth', 'Auth\APILoginController@getAuthenticatedUser');
+
+    // Keywords API route.
+    Route::get('keywords', 'KeywordController@index');
+
+    // Data API route.
+    Route::get('data', 'DataController@index');
+
+    // UnprocessedData API route.
+    Route::get('unprocesseddata', 'UnprocessedDataController@index');
+
+    // DataCollector API route.
+    Route::get('datacollector', 'DataCollectorController@index');
+
+    // StatisticsCheck API route.
+    Route::get('statisticscheck', 'StatisticsCheckController@index');
 });
