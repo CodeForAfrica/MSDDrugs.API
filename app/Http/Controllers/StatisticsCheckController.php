@@ -53,7 +53,7 @@ class StatisticsCheckController extends Controller
                         // Yesterday's statistics
                         $today = Carbon::yesterday();
                         $data = Data::where('keyword_id', $keyword->id)
-                                    ->where('created_at', '>', $today->toDateTimeString())
+                                    ->where('created_at', '=', $today->toDateTimeString())
                                     ->get();
 
                         $sms = "kwa Jana";
@@ -137,7 +137,7 @@ class StatisticsCheckController extends Controller
                             // Yesterday's statistics
                             $today = Carbon::yesterday();
                             $data = Data::where('keyword_id', $keyword->id)
-                                        ->where('created_at', '>', $today->toDateTimeString())
+                                        ->where('created_at', '=', $today->toDateTimeString())
                                         ->get();
     
                             $sms = "TAARIFA ZA JANA\n";
