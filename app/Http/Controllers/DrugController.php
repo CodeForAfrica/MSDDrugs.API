@@ -19,65 +19,98 @@ class DrugController extends Controller
         if($request->name && $request->measure && $request->buying_price)
         {
             $drug = json_decode("{}");
+            $drug_with_low_price = array();
             $price_check_result = json_decode("{}");
             $status = 0;
 
-            if(isset($queryBuilder->build()->get()[0]))
-            {
-                $drug = $queryBuilder->build()->get()[0];
-                $status = 200;
+            //Getting all drugs based on the query input.
+            $drugs = $queryBuilder->build()->get();
 
-                // Checking
+            if($drugs && count($drugs) > 0)
+            {
+                // Extracting measure
                 $measure = str_ireplace(",","",$request->measure);
                 $measure = str_ireplace("/","",$measure);
                 $measure = str_ireplace("=","",$measure);
-
                 $measure = (int)$measure;
 
+                // Extracting buying_price
                 $buying_price = str_ireplace(",","",$request->buying_price);
                 $buying_price = str_ireplace("/","",$buying_price);
                 $buying_price = str_ireplace("=","",$buying_price);
-
                 $buying_price = (int)$buying_price;
 
-                $drug_price = str_ireplace(",","",$drug->price);
-                $drug_price = str_ireplace("/","",$drug_price);
-                $drug_price = str_ireplace("=","",$drug_price);
+                // Finding price per each drug item.
+                for($x=0; $x<count($drugs); $x++){
+                    // Extracting drug price
+                    $drug_price = str_ireplace(",","",$drugs[$x]->price);
+                    $drug_price = str_ireplace("/","",$drug_price);
+                    $drug_price = str_ireplace("=","",$drug_price);
+                    $drug_price = (int)$drug_price;
 
-                $drug_price = (int)$drug_price;
+                    // Substracting UOM
+                    $temp = explode(" ",$drugs[$x]->uom);
+                    $items = (int)$temp[0];
 
-                $buying_price_status = "";
-                $extra_amount = 0;
-                $vidonge = 0;
+                    // Finding price per item
+                    $price_per_drug_item = $drug_price / $items;
+                    $required_drug_price = $price_per_drug_item * $measure;
 
-                // Substracting vidonge
-                $temp = explode(" ",$drug->uom);
-                $vidonge = (int)$temp[0];
+                    // Attaching the variables
+                    $drugs[$x]->items = $items;
+                    $drugs[$x]->price_per_drug_item = $price_per_drug_item;
+                    $drugs[$x]->required_drug_price = $required_drug_price;
+                }
 
-                // Finding price per tablet
-                $price_per_tab = $drug_price / $vidonge;
-                $required_drug_price = $price_per_tab * $measure;
+                // Finding the drug with low price.
+                $drug_with_low_price = $drugs[0];
+                for($x=0; $x<count($drugs); $x++){
+                    if($drugs[$x]->required_drug_price < $drug_with_low_price->required_drug_price)
+                        $drug_with_low_price = $drugs[$x];
+                }
 
-                if($buying_price == $required_drug_price)
+                // Checking drug type
+                $drug_type = "";
+                
+                if($drug_with_low_price->form == "Tablet") $drug_type = "vidonge";
+                else if($drug_with_low_price->form == "Injection") $drug_type = "sindano";
+                else $drug_type = "kipimo";
+
+                $sms = 'Bei ya chini ya '.$drug_with_low_price->name.' ni TZS '.$drug_with_low_price->price.'/= kwa '.$drug_type.' '.$drug_with_low_price->items.'.';
+
+                // Finding buying price status
+                if($buying_price == $drug_with_low_price->required_drug_price)
                 {
                     $buying_price_status = "equal";
-                    $extra_amount = $buying_price - $required_drug_price;
+                    $extra_amount = $buying_price - $drug_with_low_price->required_drug_price;
+
+                    $sms .= ' Umenunua '.$drug_type.' '.$measure.' kwa TZS '.$buying_price.'/=, umenunua kwa bei halali';
                 }
-                else if($buying_price > $required_drug_price)
+                else if($buying_price > $drug_with_low_price->required_drug_price)
                 {
                     $buying_price_status = "above";
-                    $extra_amount = $buying_price - $required_drug_price;
+                    $extra_amount = $buying_price - $drug_with_low_price->required_drug_price;
+
+                    $sms .= ' Umenunua '.$drug_type.' '.$measure.' kwa TZS '.$buying_price.'/=, umezidishiwa TZS '.$extra_amount.'/=.';
+                    $sms .= ' Nenda duka la dawa la '.$drug_with_low_price->location.' upate dawa hii kwa bei ya chini.';
                 }
-                else if($buying_price < $required_drug_price)
+                else if($buying_price < $drug_with_low_price->required_drug_price)
                 {
                     $buying_price_status = "below";
-                    $extra_amount = $required_drug_price - $buying_price;
+                    $extra_amount = $drug_with_low_price->required_drug_price - $buying_price;
+
+                    $sms .= ' Umenunua '.$drug_type.' '.$measure.' kwa TZS '.$buying_price.'/=, umepunguziwa TZS '.$extra_amount.'/=';
                 }
+
+                // Results
+                $status = 200;
+                $drug = $drug_with_low_price;
 
                 $price_check_result = array(
                     'buying_price_status' => $buying_price_status,
                     'extra_amount' => $extra_amount,
-                    'vidonge' => $vidonge
+                    'items' => $drug_with_low_price->items,
+                    'message' => $sms,
                 );
 
                 // Saving price check.
