@@ -8,7 +8,7 @@ use App\PriceCheck;
 
 class Drug extends Model
 {
-    protected $fillable = ['name', 'form', 'strength', 'uom', 'price'];
+    protected $fillable = ['name', 'form', 'strength', 'uom', 'location', 'price'];
 
     public function pricechecks(){
         return $this->hasMany('App\PriceCheck');

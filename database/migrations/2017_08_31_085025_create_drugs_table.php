@@ -16,10 +16,11 @@ class CreateDrugsTable extends Migration
         Schema::create('drugs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('form');
-            $table->string('strength');
-            $table->string('uom');
-            $table->string('price');
+            $table->string('form')->nullable();
+            $table->string('strength')->nullable();
+            $table->string('uom')->nullable();
+            $table->string('location')->nullable();
+            $table->string('price')->nullable();
             $table->timestamps();
         });
     }
