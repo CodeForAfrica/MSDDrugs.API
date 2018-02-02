@@ -76,7 +76,7 @@ class DrugController extends Controller
                 else if($drug_with_low_price->form == "Injection") $drug_type = "sindano";
                 else $drug_type = "kipimo";
 
-                $sms = 'Bei ya chini ya '.$drug_with_low_price->name.' ni TZS '.$drug_with_low_price->price.'/= kwa '.$drug_type.' '.$drug_with_low_price->items.'.';
+                $sms = 'Bei ya chini iliyohifadhiwa ya '.$drug_with_low_price->name.' ni TZS '.$drug_with_low_price->price.'/= kwa '.$drug_type.' '.$drug_with_low_price->items.'.';
 
                 // Finding buying price status
                 if($buying_price == $drug_with_low_price->required_drug_price)
@@ -84,22 +84,22 @@ class DrugController extends Controller
                     $buying_price_status = "equal";
                     $extra_amount = $buying_price - $drug_with_low_price->required_drug_price;
 
-                    $sms .= ' Umenunua '.$drug_type.' '.$measure.' kwa TZS '.$buying_price.'/=, umenunua kwa bei halali';
+                    $sms .= ' Umenunua '.$drug_type.' '.$measure.' kwa TZS '.$buying_price.'/=, umelipa bei halali';
                 }
                 else if($buying_price > $drug_with_low_price->required_drug_price)
                 {
                     $buying_price_status = "above";
                     $extra_amount = $buying_price - $drug_with_low_price->required_drug_price;
 
-                    $sms .= ' Umenunua '.$drug_type.' '.$measure.' kwa TZS '.$buying_price.'/=, umezidishiwa TZS '.$extra_amount.'/=.';
-                    $sms .= ' Nenda duka la dawa la '.$drug_with_low_price->location.' upate dawa hii kwa bei ya chini.';
+                    $sms .= ' Umenunua '.$drug_type.' '.$measure.' kwa TZS '.$buying_price.'/=, umelipa TZS '.$extra_amount.'/= zaidi.';
+                    $sms .= ' Nenda duka la dawa la '.$drug_with_low_price->location.' ununue dawa hii kwa bei nafuu.';
                 }
                 else if($buying_price < $drug_with_low_price->required_drug_price)
                 {
                     $buying_price_status = "below";
                     $extra_amount = $drug_with_low_price->required_drug_price - $buying_price;
 
-                    $sms .= ' Umenunua '.$drug_type.' '.$measure.' kwa TZS '.$buying_price.'/=, umepunguziwa TZS '.$extra_amount.'/=';
+                    $sms .= ' Umenunua '.$drug_type.' '.$measure.' kwa TZS '.$buying_price.'/=, umelipa TZS '.$extra_amount.'/= pungufu.';
                 }
 
                 // Results
