@@ -92,7 +92,7 @@ class DrugController extends Controller
                     $extra_amount = $buying_price - $drug_with_low_price->required_drug_price;
 
                     $sms .= ' Umenunua '.$drug_type.' '.$measure.' kwa TZS '.$buying_price.'/=, umelipa TZS '.$extra_amount.'/= zaidi.';
-                    $sms .= ' Nenda duka la dawa la '.$drug_with_low_price->location.' ununue dawa hii kwa bei nafuu.';
+                    $sms .= ' Nenda Zahanati ya '.$drug_with_low_price->location.' ununue dawa hii kwa bei nafuu.';
                 }
                 else if($buying_price < $drug_with_low_price->required_drug_price)
                 {
