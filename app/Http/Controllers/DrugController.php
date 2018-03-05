@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Drug;
 use App\PriceCheck;
 use App\WrongCheck;
+use App\Checker;
 
 use Unlu\Laravel\Api\QueryBuilder;
 
@@ -16,12 +17,15 @@ class DrugController extends Controller
         $queryBuilder = new QueryBuilder(new Drug, $request);
 
         // Buying price checking.
-        if($request->name && $request->measure && $request->buying_price)
+        if($request->name && $request->measure && $request->buying_price && $request->checker_phone_number)
         {
             $drug = json_decode("{}");
             $drug_with_low_price = array();
             $price_check_result = json_decode("{}");
             $status = 0;
+
+            //Checker phone number
+            $checker_phone_number = $request->checker_phone_number;
 
             //Getting all drugs based on the query input.
             $drugs = $queryBuilder->build()->get();
@@ -119,6 +123,7 @@ class DrugController extends Controller
                 $price_check->buying_price = $buying_price;
                 $price_check->status = $buying_price_status;
                 $price_check->extra_amount = $extra_amount;
+                $price_check->checker_phone_number = $checker_phone_number;
                 $price_check->save();
             }
             else
@@ -129,8 +134,14 @@ class DrugController extends Controller
                 $wrong_check = new WrongCheck();
                 $wrong_check->drug_name = str_replace("*","",$request->name);
                 $wrong_check->buying_amount = $request->buying_price;
+                $wrong_check->checker_phone_number = $checker_phone_number;
                 $wrong_check->save();
             }
+
+            // Saving checker.
+            $checker = new Checker();
+            $checker->phone_number = $checker_phone_number;
+            $checker->save();
 
             return response()->json([
                 'status' => $status,
