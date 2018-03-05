@@ -39,6 +39,9 @@ Route::group(['middleware' => ['auth:api','cors']], function(){
     Route::post('wrongchecks', 'WrongCheckController@store');
     Route::put('wrongchecks/{wrongcheck}', 'WrongCheckController@update');
     Route::delete('wrongchecks/{wrongcheck}', 'WrongCheckController@delete');
+
+     // Checkers API route.
+     Route::get('checkers', 'CheckerController@index');
 });
 
 Route::group(['middleware' => 'cors'], function(){
