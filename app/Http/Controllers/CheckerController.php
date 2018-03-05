@@ -39,7 +39,7 @@ class CheckerController extends Controller
             $checkers = $queryBuilder->build()->get();
             $status = 0;
             
-            if($checkers && count(checkers) > 0) $status = 200;
+            if($checkers && count($checkers) > 0) $status = 200;
             else $status = 404;
 
             return response()->json([
