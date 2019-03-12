@@ -14,7 +14,7 @@ class AlterPriceChecksAddStrengthAndMeasure extends Migration
     public function up()
     {
         Schema::table('price_checks', function($table) {
-            $table->string('measure')->nullable();
+            $table->string('measure')->after('buying_price')->nullable();
             $table->string('strength')->after('measure')->nullable();
         });
     }
