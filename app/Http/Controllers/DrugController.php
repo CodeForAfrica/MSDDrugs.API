@@ -15,9 +15,9 @@ class DrugController extends Controller
     public function index(Request $request)
     {
         $queryBuilder = new QueryBuilder(new Drug, $request);
-
+      
         // Buying price checking.
-        if($request->name && $request->measure && $request->buying_price && $request->checker_phone_number)
+        if($request->name && $request->measure && $request->buying_price && $request->checker_phone_number && $request->strength)
         {
             $drug = json_decode("{}");
             $drug_with_low_price = array();
@@ -43,6 +43,12 @@ class DrugController extends Controller
                 $buying_price = str_ireplace("/","",$buying_price);
                 $buying_price = str_ireplace("=","",$buying_price);
                 $buying_price = (int)$buying_price;
+
+                // Extracting strength
+                $strength = str_ireplace(",","",$request->strength);
+                $strength = str_ireplace("/","",$strength);
+                $strength = str_ireplace("=","",$strength);
+                $strength = (int)$strength;
 
                 // Finding price per each drug item.
                 for($x=0; $x<count($drugs); $x++){
@@ -123,6 +129,8 @@ class DrugController extends Controller
                 $price_check->buying_price = $buying_price;
                 $price_check->status = $buying_price_status;
                 $price_check->extra_amount = $extra_amount;
+                $price_check->measure = $measure;
+                $price_check->strength = $strength;
                 $price_check->checker_phone_number = $checker_phone_number;
                 $price_check->save();
             }
@@ -134,6 +142,8 @@ class DrugController extends Controller
                 $wrong_check = new WrongCheck();
                 $wrong_check->drug_name = str_replace("*","",$request->name);
                 $wrong_check->buying_amount = $request->buying_price;
+                $wrong_check->measure = $request->measure;
+                $wrong_check->strength = $request->strength;
                 $wrong_check->checker_phone_number = $checker_phone_number;
                 $wrong_check->save();
             }
