@@ -10,4 +10,4 @@ for env_file in /app/.profile.d/00-global-env.sh /app/.profile.d/01-app-env.sh; 
 done
 set +a
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-exec docker-php-entrypoint "$@"
+exec /usr/local/bin/clone3-fallback docker-php-entrypoint "$@"
