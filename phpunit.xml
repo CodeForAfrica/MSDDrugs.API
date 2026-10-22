@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- The PHP-compatible PHPUnit version uses the current configuration schema; isolated test credentials and stores prevent production access while checking the upgraded application. -->
-<phpunit bootstrap="vendor/autoload.php" colors="true" failOnWarning="true" failOnRisky="true">
+<!-- Pin PHPUnit 9 for the PHP 8-compatible framework while preserving the existing test configuration schema and isolated test environment. -->
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
     <testsuites>
         <testsuite name="Feature">
-            <directory suffix="Test.php">tests/Feature</directory>
+            <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
+
         <testsuite name="Unit">
-            <directory suffix="Test.php">tests/Unit</directory>
+            <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
     </testsuites>
-    <source>
-        <include>
-            <directory suffix=".php">app</directory>
-        </include>
-    </source>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./app</directory>
+        </whitelist>
+    </filter>
     <php>
         <env name="APP_ENV" value="testing" force="true"/>
         <env name="APP_KEY" value="base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=" force="true"/>

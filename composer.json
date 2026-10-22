@@ -6,16 +6,16 @@
     "type": "project",
     "require": {
         "php": "~8.3.36",
-        "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10",
-        "tymon/jwt-auth": "^2.3",
-        "unlu/laravel-api-query-builder": "~1.0",
-        "laravel/helpers": "^1.8"
+        "laravel/framework": "9.52.21",
+        "laravel/tinker": "2.11.1",
+        "tymon/jwt-auth": "2.0.0",
+        "unlu/laravel-api-query-builder": "1.7.0",
+        "laravel/helpers": "1.8.3"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.24",
-        "mockery/mockery": "^1.6",
-        "phpunit/phpunit": "^11.5"
+        "fakerphp/faker": "1.24.1",
+        "mockery/mockery": "1.6.15",
+        "phpunit/phpunit": "9.6.38"
     },
     "autoload": {
         "classmap": [

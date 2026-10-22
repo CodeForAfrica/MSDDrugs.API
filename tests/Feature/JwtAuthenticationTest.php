@@ -8,7 +8,6 @@ use App\Http\Controllers\Auth\APILoginController;
 use App\Http\Requests\LoginRequest;
 use App\User;
 use Illuminate\Http\Request;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -54,7 +53,7 @@ final class JwtAuthenticationTest extends TestCase
         ];
     }
 
-    #[DataProvider('rejectedTokens')]
+    /** @dataProvider rejectedTokens */
     public function test_rejected_tokens_preserve_the_existing_response(string $exceptionClass, string $responseCode): void
     {
         JWTAuth::shouldReceive('parseToken')->once()->andThrow(new $exceptionClass('test rejection'));

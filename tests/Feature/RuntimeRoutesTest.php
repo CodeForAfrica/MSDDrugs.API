@@ -23,14 +23,13 @@ final class RuntimeRoutesTest extends TestCase
 
     protected function tearDown(): void
     {
-        TrustProxies::flushState();
         Request::setTrustedProxies([], 0);
         parent::tearDown();
     }
 
     public function test_untrusted_proxy_headers_cannot_change_the_request_scheme(): void
     {
-        TrustProxies::at(['198.51.100.2']);
+        config(['trustedproxy.proxies' => ['198.51.100.2']]);
         $request = Request::create('http://internal.example', server: [
             'REMOTE_ADDR' => '198.51.100.1',
             'HTTP_X_FORWARDED_PROTO' => 'https',
@@ -43,7 +42,7 @@ final class RuntimeRoutesTest extends TestCase
 
     public function test_an_explicitly_trusted_proxy_can_forward_the_request_scheme(): void
     {
-        TrustProxies::at(['198.51.100.1']);
+        config(['trustedproxy.proxies' => ['198.51.100.1']]);
         $request = Request::create('http://internal.example', server: [
             'REMOTE_ADDR' => '198.51.100.1',
             'HTTP_X_FORWARDED_PROTO' => 'https',
