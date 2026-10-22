@@ -1,4 +1,6 @@
 <?php
+// Use the compatibility schema grammar for this connection so the Laravel upgrade can inspect existing MySQL/MariaDB columns without migrating the database.
+
 
 namespace App\Database;
 

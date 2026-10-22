@@ -1,4 +1,6 @@
 <?php
+// The PHP-compatible JWT package requires JWTSubject; retain the existing user primary key as the token subject and add no custom claims.
+
 
 namespace App;
 

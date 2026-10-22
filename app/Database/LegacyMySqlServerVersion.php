@@ -1,4 +1,6 @@
 <?php
+// Detect generated-column metadata support from MySQL/MariaDB versions, including the MariaDB compatibility prefix, before selecting Laravel schema metadata.
+
 
 namespace App\Database;
 

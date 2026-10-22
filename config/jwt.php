@@ -1,4 +1,6 @@
 <?php
+// Use the upgraded JWT package defaults instead of removed adapter classes; read the signing secret from deployment configuration.
+
 
 /*
  * This file is part of jwt-auth.

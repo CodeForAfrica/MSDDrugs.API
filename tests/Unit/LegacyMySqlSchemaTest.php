@@ -1,4 +1,6 @@
 <?php
+// Exercise old MySQL/MariaDB metadata boundaries and lazy connection registration so the runtime upgrade needs no schema migration.
+
 
 namespace Tests\Unit;
 

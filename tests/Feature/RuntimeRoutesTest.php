@@ -1,4 +1,6 @@
 <?php
+// Check existing route responses and proxy handling on the upgraded framework using isolated test configuration.
+
 
 namespace Tests\Feature;
 

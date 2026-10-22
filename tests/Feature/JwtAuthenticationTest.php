@@ -1,4 +1,6 @@
 <?php
+// Verify the upgraded JWT contract still supports login/token validation and preserves authentication error responses without production keys.
+
 
 namespace Tests\Feature;
 

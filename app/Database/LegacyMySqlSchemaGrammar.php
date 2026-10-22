@@ -1,4 +1,6 @@
 <?php
+// Laravel now selects generation_expression from information_schema; older deployed servers lack that column, so select NULL only when unsupported.
+
 
 namespace App\Database;
 

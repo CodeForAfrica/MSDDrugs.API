@@ -1,4 +1,6 @@
 <?php
+// The upgraded JWT library no longer exposes getStatusCode(); catch its actual exception classes and preserve authentication failures as HTTP 401.
+
 
 namespace App\Http\Controllers\Auth;
 

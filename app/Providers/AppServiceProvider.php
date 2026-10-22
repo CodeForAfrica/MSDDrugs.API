@@ -1,4 +1,6 @@
 <?php
+// Register the legacy MySQL connection lazily so Laravel schema inspection remains compatible with the existing database server without opening a connection at boot.
+
 
 namespace App\Providers;
 

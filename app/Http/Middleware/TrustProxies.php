@@ -1,4 +1,6 @@
 <?php
+// The upgraded Laravel uses its native proxy middleware and a header bitmask; preserve forwarded client, host, port and scheme handling.
+
 
 namespace App\Http\Middleware;
 
