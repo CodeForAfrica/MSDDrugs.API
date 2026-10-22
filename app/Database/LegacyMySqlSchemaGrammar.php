@@ -5,17 +5,21 @@ namespace App\Database;
 use Illuminate\Database\Schema\Grammars\MySqlGrammar;
 use PDO;
 
-class LegacyMySqlSchemaGrammar extends MySqlGrammar
+final class LegacyMySqlSchemaGrammar extends MySqlGrammar
 {
-    public function compileColumns($schema, $table)
+    private const GENERATED_COLUMN_EXPRESSION = 'generation_expression as `expression`';
+
+    private const UNSUPPORTED_COLUMN_EXPRESSION = 'NULL as `expression`';
+
+    public function compileColumns(mixed $schema, mixed $table): string
     {
-        $sql = parent::compileColumns($schema, $table);
-        // Resolve the server version only when introspection is requested, never at boot.
-        $version = (string) $this->connection->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
-        if (!LegacyMySqlServerVersion::supportsGenerationExpression($version)) {
-            return str_replace('generation_expression as `expression`', 'NULL as `expression`', $sql);
+        $columnQuery = parent::compileColumns($schema, $table);
+        $serverVersion = (string) $this->connection->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
+
+        if (LegacyMySqlServerVersion::supportsGenerationExpression($serverVersion)) {
+            return $columnQuery;
         }
 
-        return $sql;
+        return str_replace(self::GENERATED_COLUMN_EXPRESSION, self::UNSUPPORTED_COLUMN_EXPRESSION, $columnQuery);
     }
 }

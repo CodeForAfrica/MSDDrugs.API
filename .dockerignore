@@ -1,8 +1,0 @@
-**
-!Dockerfile
-!security/
-!security/php-runtime/
-!security/php-runtime/vhost.conf
-!security/php-runtime/security.ini
-!security/php-runtime/entrypoint.sh
-!security/php-runtime/clone3-fallback.c
