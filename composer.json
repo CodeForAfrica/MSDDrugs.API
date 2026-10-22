@@ -33,14 +33,19 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-            ]
+            "dont-discover": []
         }
     },
     "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover"
         ]
     },
     "config": {
@@ -50,7 +55,5 @@
         "platform": {
             "php": "8.3.36"
         }
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    }
 }

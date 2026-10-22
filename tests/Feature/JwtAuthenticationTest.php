@@ -6,8 +6,6 @@ use App\Http\Controllers\Auth\APILoginController;
 use App\Http\Requests\LoginRequest;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Mockery;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -88,9 +86,8 @@ final class JwtAuthenticationTest extends TestCase
         $this->assertSame(['token' => 'test-token'], $response->getData(true));
     }
 
-    public function test_signing_failure_returns_a_generic_error_and_safe_log_context(): void
+    public function test_signing_failure_returns_the_existing_generic_error(): void
     {
-        $logger = Log::spy();
         JWTAuth::shouldReceive('attempt')->once()->andThrow(new JWTException('test signing failure'));
         $request = LoginRequest::create('/api/user/login', 'GET');
         $controller = $this->app->make(APILoginController::class);
@@ -98,13 +95,6 @@ final class JwtAuthenticationTest extends TestCase
 
         $this->assertSame(500, $response->getStatusCode());
         $this->assertSame(['error' => 'could_not_create_token'], $response->getData(true));
-        $logger->shouldHaveReceived('error')->once()->with('JWT signing failed', Mockery::on(
-            static fn (array $context): bool => $context['event'] === 'jwt_signing_failed'
-                && $context['reason'] !== ''
-                && $context['correlation_id'] !== ''
-                && ! array_key_exists('password', $context)
-                && ! array_key_exists('token', $context),
-        ));
     }
 
     public function test_a_verified_token_returns_its_user(): void

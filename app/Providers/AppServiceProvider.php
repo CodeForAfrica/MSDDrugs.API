@@ -2,12 +2,9 @@
 
 namespace App\Providers;
 
-use App\Database\LegacyMySqlConnection;
-use Closure;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Connection;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\ServiceProvider;
-use PDO;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(): void
+    public function boot()
     {
         Schema::defaultStringLength(191);
     }
@@ -26,15 +23,10 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register(): void
+    public function register()
     {
-        Connection::resolverFor('mysql', static function (
-            PDO|Closure $connection,
-            string $database,
-            string $tablePrefix,
-            array $configuration,
-        ): LegacyMySqlConnection {
-            return new LegacyMySqlConnection($connection, $database, $tablePrefix, $configuration);
+        Connection::resolverFor('mysql', function ($connection, $database, $prefix, $config) {
+            return new \App\Database\LegacyMySqlConnection($connection, $database, $prefix, $config);
         });
     }
 }
