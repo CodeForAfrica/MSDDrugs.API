@@ -26,6 +26,7 @@ class APILoginController extends Controller
 
     public function index(LoginRequest $request): JsonResponse
     {
+        // Authenticate user with JWT.
         $credentials = $request->only('email', 'password');
 
         try {
