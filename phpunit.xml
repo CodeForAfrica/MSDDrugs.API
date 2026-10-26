@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Pin PHPUnit 9 for the PHP 8-compatible framework while preserving the existing test configuration schema and isolated test environment. -->
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
          bootstrap="vendor/autoload.php"
@@ -23,9 +24,16 @@
         </whitelist>
     </filter>
     <php>
-        <env name="APP_ENV" value="testing"/>
-        <env name="CACHE_DRIVER" value="array"/>
-        <env name="SESSION_DRIVER" value="array"/>
-        <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="APP_ENV" value="testing" force="true"/>
+        <env name="APP_KEY" value="base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=" force="true"/>
+        <env name="JWT_SECRET" value="test-only-jwt-key-not-for-production-0123456789" force="true"/>
+        <env name="DATABASE_URL" value="mysql://test:test@127.0.0.1:3306/test" force="true"/>
+        <env name="DB_CONNECTION" value="sqlite" force="true"/>
+        <env name="DB_DATABASE" value=":memory:" force="true"/>
+        <env name="CACHE_DRIVER" value="array" force="true"/>
+        <env name="CACHE_STORE" value="array" force="true"/>
+        <env name="SESSION_DRIVER" value="array" force="true"/>
+        <env name="QUEUE_DRIVER" value="sync" force="true"/>
+        <env name="MAIL_DRIVER" value="array" force="true"/>
     </php>
 </phpunit>

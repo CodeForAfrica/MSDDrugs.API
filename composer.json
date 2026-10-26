@@ -5,18 +5,17 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=7.0.0",
-        "fideloper/proxy": "~3.3",
-        "laravel/framework": "5.5.*",
-        "laravel/tinker": "~1.0",
-        "tymon/jwt-auth": "0.5.*",
-        "unlu/laravel-api-query-builder": "~1.0"
+        "php": "~8.3.36",
+        "laravel/framework": "9.52.21",
+        "laravel/tinker": "2.11.1",
+        "tymon/jwt-auth": "2.0.0",
+        "unlu/laravel-api-query-builder": "1.7.0",
+        "laravel/helpers": "1.8.3"
     },
     "require-dev": {
-        "filp/whoops": "~2.0",
-        "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~6.0"
+        "fakerphp/faker": "1.24.1",
+        "mockery/mockery": "1.6.15",
+        "phpunit/phpunit": "9.6.38"
     },
     "autoload": {
         "classmap": [
@@ -53,6 +52,9 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "platform": {
+            "php": "8.3.36"
+        }
     }
 }

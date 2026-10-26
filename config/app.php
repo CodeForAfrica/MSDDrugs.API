@@ -1,4 +1,6 @@
 <?php
+// Load the provider class supplied by the upgraded dependency; retaining the removed provider would prevent application boot.
+
 
 return [
 
@@ -178,7 +180,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         
         Unlu\Laravel\Api\ApiQueryBuilderServiceProvider::class,
-        \Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class, 
+        \Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
     ],
 

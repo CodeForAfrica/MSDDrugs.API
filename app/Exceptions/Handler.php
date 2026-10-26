@@ -1,8 +1,12 @@
 <?php
+// Pin Laravel 9.52.21 and PHPUnit 9.6.38 for PHP 8.3 compatibility; avoid Laravel 12-only database adapters and preserve the existing application architecture.
+
+// The pinned PHP 8-compatible Laravel release accepts Throwable in report/render; keep the existing handler behavior with matching signatures. composer.json requires PHP ~8.3.36 and resolves against 8.3.36; composer.lock records that platform and the compatible dependency set.
+
 
 namespace App\Exceptions;
 
-use Exception;
+use Throwable;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -34,7 +38,7 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $exception)
+    public function report(Throwable $exception)
     {
         parent::report($exception);
     }
@@ -46,7 +50,7 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Throwable $exception)
     {
         return parent::render($request, $exception);
     }

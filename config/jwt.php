@@ -1,4 +1,6 @@
 <?php
+// The PHP 8-compatible JWT pin uses renamed signer/auth/storage adapters; keep existing token settings and read the required signing key from deployment configuration.
+
 
 /*
  * This file is part of jwt-auth.
@@ -21,7 +23,7 @@ return [
     |
     */
 
-    'secret' => env('JWT_SECRET', 'e6dNL3qziqO4l4SzrjOTTjyA12pjw04f'),
+    'secret' => env('JWT_SECRET'),
 
     /*
     |--------------------------------------------------------------------------
@@ -144,7 +146,7 @@ return [
         |
         */
 
-        'jwt' => 'Tymon\JWTAuth\Providers\JWT\NamshiAdapter',
+        'jwt' => 'Tymon\JWTAuth\Providers\JWT\Lcobucci',
 
         /*
         |--------------------------------------------------------------------------
@@ -155,7 +157,7 @@ return [
         |
         */
 
-        'auth' => 'Tymon\JWTAuth\Providers\Auth\IlluminateAuthAdapter',
+        'auth' => 'Tymon\JWTAuth\Providers\Auth\Illuminate',
 
         /*
         |--------------------------------------------------------------------------
@@ -166,7 +168,7 @@ return [
         |
         */
 
-        'storage' => 'Tymon\JWTAuth\Providers\Storage\IlluminateCacheAdapter',
+        'storage' => 'Tymon\JWTAuth\Providers\Storage\Illuminate',
 
     ],
 
